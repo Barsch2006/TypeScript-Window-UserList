@@ -1,6 +1,6 @@
 const { exec } = require("child_process");
 
-export default async (cmd: any, args: any) => {
+export default async (cmd: string, args: string): Promise<string> => {
     return new Promise((resolve, reject) => {
         const options = {
             encoding: 'utf8',
