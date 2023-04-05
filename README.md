@@ -1,8 +1,8 @@
-# TypeScript-Window-UserList
+# Release v1.0.0
 
-A TypeScript Project getting the Usernames from `net user` and then gets the full name and the global classes by `net user <username>`. You can also check my Inspiration from [WindowsUserList](https://github.com/filip326/WindowsUserList), which does nearly the same in C# (.Net).
+First release.
 
-## Use
+## Installation
 
 Edit the .ENV to your System-Lang. For German it's:
 
@@ -12,10 +12,9 @@ CLASS_QUERY = Globale Gruppenmitgliedschaften
 RETURN_NULL_CLASS = "*Kein"
 ```
 
+Next run:
+
 ```bash
 npm i
 npm run start
 ```
-
-Type *1*, if you'd like to have the `/domain` at the end of the `net user /domain`. Else type *2*.
-You get a JSON-File (`./users.json`) as an output.
