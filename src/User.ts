@@ -1,6 +1,6 @@
 import runCmd from './runCmd';
-import dotenv from 'dotenv';
-dotenv.config();
+import { config } from 'dotenv';
+config();
 
 export default class User {
     username: string;

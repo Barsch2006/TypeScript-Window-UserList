@@ -1,9 +1,9 @@
-import get from 'prompt';
+import { get } from 'prompt';
 
 export default async function input(name: string): Promise<string> {
     return new Promise((res, rej) => {
         try {
-            get.get([name], (err: any, result: any) => {
+            get([name], (err: any, result: any) => {
                 if (err) {
                     rej(err);
                 } else {

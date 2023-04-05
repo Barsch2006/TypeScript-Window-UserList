@@ -1,7 +1,7 @@
 import User from './User';
 import runCmd from './runCmd';
 import input from './input';
-import fs from 'fs';
+import {appendFileSync, writeFileSync, existsSync,unlinkSync} from 'fs';
 
 
 
@@ -41,8 +41,8 @@ async function main() {
             file = await input("outputFile");
         }
 
-        if (fs.existsSync(file) == true) {
-            fs.unlinkSync(file);
+        if (existsSync(file) == true) {
+            unlinkSync(file);
         }
 
         const users: string[] = await Benutzernamen(selection === 0);
@@ -56,14 +56,14 @@ async function main() {
                 name: user.name,
                 class: user.class
             };
-            if (fs.existsSync(file) === false) {
-                fs.writeFileSync(file, '[\n');
+            if (existsSync(file) === false) {
+                writeFileSync(file, '[\n');
             }
 
             if (i == users.length - 1) {
-                fs.appendFileSync(file, JSON.stringify(json) + '\n]\n');
+                appendFileSync(file, JSON.stringify(json) + '\n]\n');
             } else {
-                fs.appendFileSync(file, JSON.stringify(json) + ',\n');
+                appendFileSync(file, JSON.stringify(json) + ',\n');
             }
         }
         
