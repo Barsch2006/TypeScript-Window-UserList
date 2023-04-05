@@ -1,4 +1,6 @@
 import runCmd from './runCmd';
+import dotenv from 'dotenv';
+dotenv.config();
 
 export default class User {
     username: string;
@@ -26,27 +28,29 @@ export default class User {
 }
 
 async function BenutzerKlasse(username: string, domain: boolean) {
+    const queryString: string = process.env.CLASS_QUERY ?? "Globale Gruppenmitgliedschaften";
     const output: string = await runCmd("net", `user ${username}${domain ? " /domain" : ""}`);
 
     const outputLines: string[] = output.split("\n").map((line: any) => line.trim());
-    const userinfo: string | undefined = outputLines.find((line: any) => line.startsWith("Globale Gruppenmitgliedschaften"));
+    const userinfo: string | undefined = outputLines.find((line: any) => line.startsWith(queryString));
 
-    if (!userinfo || userinfo.substring("Globale Gruppenmitgliedschaften".length).trim() == "*Kein") {
+    if (!userinfo || userinfo.substring(queryString.length).trim() == process.env.RETURN_NULL_CLASS) {
         return null;
     }
 
-    return userinfo.substring("Globale Gruppenmitgliedschaften".length).trim();
+    return userinfo.substring(queryString.length).trim();
 }
 
 async function BenutzerName(username: string, domain: boolean) {
+    const queryString: string = process.env.NAME_QUERY ?? "Vollst�ndiger Name";
     const output: string = await runCmd("net", `user ${username} ${domain ? " /domain" : ""}`);
 
     const outputLines: string[] = output.split("\n").map((line: string) => line.trim());
-    const userinfo = outputLines.find((line: string) => line.startsWith("Vollst�ndiger Name"));
+    const userinfo = outputLines.find((line: string) => line.startsWith(queryString));
 
     if (!userinfo) {
         return null;
     }
 
-    return userinfo.substring("Vollst�ndiger Name".length).trim();
+    return userinfo.substring(queryString.length).trim();
 }

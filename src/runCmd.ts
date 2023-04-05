@@ -9,6 +9,8 @@ export default async (cmd: string, args: string): Promise<string> => {
         const childProcess = exec(`${cmd} ${args}`, options, (err: any, stdout: any, stderr: any) => {
             if (err) {
                 reject(err);
+            } else if (stderr) {
+                reject(stderr);
             } else {
                 resolve(stdout);
             }

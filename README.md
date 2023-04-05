@@ -4,13 +4,16 @@ A TypeScript Project getting the Usernames from `net user` and then gets the ful
 
 ## Use
 
-Edit the files, if your Computer doesn't give German Outputs. (It was developed for German Systems)
+Edit the .ENV to your System-Lang. For German it's:
+
+```env
+NAME_QUERY = Vollst�ndiger Name
+CLASS_QUERY = Globale Gruppenmitgliedschaften
+RETURN_NULL_CLASS = "*Kein"
+```
 
 ```bash
-ts-node .
-# or
-ts-node index.ts
-# or
+npm i
 npm run start
 ```
 
