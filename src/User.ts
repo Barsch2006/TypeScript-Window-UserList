@@ -18,8 +18,9 @@ export default class User {
     }
 
     async parseData() {
-        const name: string | null = await BenutzerName(this.username, this.domain);
-        const userClass: string | null = await BenutzerKlasse(this.username, this.domain);
+        const userData: string = await runCmd("net", `user ${this.username}${this.domain ? " /domain" : ""}`);
+        const name: string | null = await BenutzerName(userData);
+        const userClass: string | null = await BenutzerKlasse(userData);
 
         this.name = name;
         this.class = userClass;
@@ -27,10 +28,8 @@ export default class User {
     }
 }
 
-async function BenutzerKlasse(username: string, domain: boolean) {
+async function BenutzerKlasse(output: string) {
     const queryString: string = process.env.CLASS_QUERY ?? "Globale Gruppenmitgliedschaften";
-    const output: string = await runCmd("net", `user ${username}${domain ? " /domain" : ""}`);
-
     const outputLines: string[] = output.split("\n").map((line: any) => line.trim());
     const userinfo: string | undefined = outputLines.find((line: any) => line.startsWith(queryString));
 
@@ -41,10 +40,8 @@ async function BenutzerKlasse(username: string, domain: boolean) {
     return userinfo.substring(queryString.length).trim();
 }
 
-async function BenutzerName(username: string, domain: boolean) {
+async function BenutzerName(output: string) {
     const queryString: string = process.env.NAME_QUERY ?? "Vollst�ndiger Name";
-    const output: string = await runCmd("net", `user ${username} ${domain ? " /domain" : ""}`);
-
     const outputLines: string[] = output.split("\n").map((line: string) => line.trim());
     const userinfo = outputLines.find((line: string) => line.startsWith(queryString));
 
