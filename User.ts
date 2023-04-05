@@ -1,23 +1,23 @@
 import runCmd from './runCmd';
 
 export default class User {
-    username: string | any
-    domain: any
-    name: any
-    class: any
-    ready: boolean | any
+    username: string;
+    domain: boolean
+    name: string | null;
+    class: string | null;
+    ready: boolean | null
 
-    constructor(username: any, domain: any) {
+    constructor(username: string, domain: boolean) {
         this.username = username;
         this.domain = domain;
-        this.name = "";
-        this.class = "";
+        this.name = null;
+        this.class = null;
         this.ready = false;
     }
 
     async parseData() {
-        const name = await BenutzerName(this.username, this.domain) ?? null;
-        const userClass = await BenutzerKlasse(this.username, this.domain) ?? null;
+        const name: string | null = await BenutzerName(this.username, this.domain);
+        const userClass: string | null = await BenutzerKlasse(this.username, this.domain);
 
         this.name = name;
         this.class = userClass;
@@ -25,11 +25,11 @@ export default class User {
     }
 }
 
-async function BenutzerKlasse(username: any, domain: any) {
-    const output: any = await runCmd("net", `user ${username}${domain ? " /domain" : ""}`);
+async function BenutzerKlasse(username: string, domain: boolean) {
+    const output: string = await runCmd("net", `user ${username}${domain ? " /domain" : ""}`);
 
-    const outputLines = output.split("\n").map((line: any) => line.trim());
-    const userinfo = outputLines.find((line: any) => line.startsWith("Globale Gruppenmitgliedschaften"));
+    const outputLines: string[] = output.split("\n").map((line: any) => line.trim());
+    const userinfo: string | undefined = outputLines.find((line: any) => line.startsWith("Globale Gruppenmitgliedschaften"));
 
     if (!userinfo || userinfo.substring("Globale Gruppenmitgliedschaften".length).trim() == "*Kein") {
         return null;
@@ -38,8 +38,8 @@ async function BenutzerKlasse(username: any, domain: any) {
     return userinfo.substring("Globale Gruppenmitgliedschaften".length).trim();
 }
 
-async function BenutzerName(username: any, domain: any) {
-    const output: any = await runCmd("net", `user ${username} ${domain ? " /domain" : ""}`);
+async function BenutzerName(username: string, domain: boolean) {
+    const output: string = await runCmd("net", `user ${username} ${domain ? " /domain" : ""}`);
 
     const outputLines: string[] = output.split("\n").map((line: string) => line.trim());
     const userinfo = outputLines.find((line: string) => line.startsWith("Vollst�ndiger Name"));
