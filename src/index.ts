@@ -36,6 +36,11 @@ async function main() {
             file = await input("outputFile");
         }
 
+        while (file.endsWith('.json') == false) {
+            console.warn("The file should end with .json");
+            file = await input("outputFile");
+        }
+
         if (fs.existsSync(file) == true) {
             fs.unlinkSync(file);
         }
