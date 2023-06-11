@@ -3,8 +3,6 @@ import runCmd from './runCmd';
 import input from './input';
 import {appendFileSync, writeFileSync, existsSync,unlinkSync} from 'fs';
 
-
-
 async function Benutzernamen(domain: boolean) {
     const output: any = await runCmd("net", `user ${domain ? " /domain" : ""}`);
     var outputLines: string[] = output.toString().split('  ');
