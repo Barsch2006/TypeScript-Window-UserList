@@ -1,6 +1,6 @@
-# Release v1.0.0
+# TypeScript Window UserList
 
-First release.
+Log the Global Classes and the fullname of all users of your Windows PC or your Windows Domain Network
 
 ## Installation
 
@@ -16,5 +16,8 @@ Next run:
 
 ```bash
 npm i
-npm run start
+# if you want it to run with ts-node run:
+npm run start-ts 
+# if you want it to run with node run:
+npm run start-js
 ```
