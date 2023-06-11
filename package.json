@@ -13,7 +13,8 @@
     "@types/prompt": "^1.1.5"
   },
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "start-js": "node ./src/index.js",
+    "start-ts": "ts-node src/index.ts",
     "build": "tsc",
     "lint": "tslint -c tslint.json src/**/*.ts",
     "prepublish": "npm run build"

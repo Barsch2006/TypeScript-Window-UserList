@@ -1,13 +1,13 @@
-import User from './User';
-import runCmd from './runCmd';
-import input from './input';
-import {appendFileSync, writeFileSync, existsSync,unlinkSync} from 'fs';
+const User = require('./User');
+const runCmd = require('./runCmd');
+const input = require('./input');
+const {appendFileSync, writeFileSync, existsSync,unlinkSync} = require('fs');
 
-async function Benutzernamen(domain: boolean) {
-    const output: any = await runCmd("net", `user ${domain ? " /domain" : ""}`);
-    var outputLines: string[] = output.toString().split('  ');
-    var users: string[] = [];
-    outputLines.splice(4).filter(Boolean).forEach(async (element: string) => {
+async function Benutzernamen(domain) {
+    const output = await runCmd("net", `user ${domain ? " /domain" : ""}`);
+    var outputLines = output.toString().split('  ');
+    var users = [];
+    outputLines.splice(4).filter(Boolean).forEach(async (element) => {
         users.push(element.trimStart().trimEnd());
     });
     users.pop();
@@ -21,7 +21,7 @@ async function main() {
         console.log("(2)  lokale Benutzer");
 
         let selection = 0;
-        let key: string = "";
+        let key = "";
         while (key == "") {
             key = await input("mode");
         }
@@ -43,7 +43,7 @@ async function main() {
             unlinkSync(file);
         }
 
-        const users: string[] = await Benutzernamen(selection === 0);
+        const users = await Benutzernamen(selection === 0);
 
         for (let i = 0; i < users.length; i++) {
             let username = users[i];
