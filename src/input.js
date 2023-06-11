@@ -1,9 +1,9 @@
-import { get } from 'prompt';
+const { get } = require('prompt');
 
-export default async function input(name: string): Promise<string> {
+async function input(name) {
     return new Promise((res, rej) => {
         try {
-            get([name], (err: any, result: any) => {
+            get([name], (err, result) => {
                 if (err) {
                     rej(err);
                 } else {
@@ -15,3 +15,5 @@ export default async function input(name: string): Promise<string> {
         }
     })
 }
+
+module.exports = input;
